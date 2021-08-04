@@ -2,12 +2,12 @@
 
 Search the MDN Web Docs in VSCode!
 
-# To-Do
+## To-Do
 
 - [ ] Add locales
 - [ ] Add functionality to open link here on vsc via webviews
 
-# FAQ
+## FAQ
 
 > Why did you make this is Python?
 
