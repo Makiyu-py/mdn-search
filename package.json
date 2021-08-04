@@ -1,34 +1,34 @@
 {
-	"name": "mdn-search",
-	"displayName": "MDN Search",
-	"version": "0.0.1",
-	"engines": {
-		"vscode": "^1.56.0"
-	},
-	"categories": [
-		"Other"
-	],
-	"main": "./build/extension.js",
-	"contributes": {
-		"commands": [
-			{
-				"command": "mdn-search.searchMdn",
-				"title": "Search Mdn",
-				"category": "MDN Search"
-			}
-		],
-		"configuration": {
-			"title": "MDN Search",
-			"properties": {
-				"mdn-search.Open Top Result": {
-					"description": "If enabled, this'll open the top result of the search.",
-					"type": "boolean",
-					"default": false
-				}
-			}
-		}
-	},
-	"activationEvents": [
-		"onCommand:mdn-search.searchMdn"
-	]
+  "name": "mdn-search",
+  "displayName": "MDN Search",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.56.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "main": "./build/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "mdn-search.searchMdn",
+        "title": "Search Mdn",
+        "category": "MDN Search"
+      }
+    ],
+    "configuration": {
+      "title": "MDN Search",
+      "properties": {
+        "mdn-search.Open Top Result": {
+          "description": "If enabled, this'll open the top result of the search.",
+          "type": "boolean",
+          "default": false
+        }
+      }
+    }
+  },
+  "activationEvents": [
+    "onCommand:mdn-search.searchMdn"
+  ]
 }

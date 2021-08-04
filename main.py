@@ -37,17 +37,12 @@ def on_activate():
 
 @ext.command()
 def search_mdn():
-    try:
-        editor = vscode.window.ActiveTextEditor()
-    except AttributeError:
+    editor = vscode.window.ActiveTextEditor()
+    if not editor or editor.selection.is_empty:
         options = vscode.ext.InputBoxOptions(title="Search MDN Web Docs")
         q = vscode.window.show_input_box(options)
     else:
-        if not editor or editor.selection.is_empty:
-            options = vscode.ext.InputBoxOptions(title="Search MDN Web Docs")
-            q = vscode.window.show_input_box(options)
-        else:
-            q = editor.document.get_text(editor.selection)
+        q = editor.document.get_text(editor.selection)
 
     if not q:
         return
