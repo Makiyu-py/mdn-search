@@ -181,8 +181,8 @@ class Webview {
 function activate(context) {
 let globalStorage = {}
 console.log("MDN Search has been activated");
-let searchMdn = vscode.commands.registerCommand('mdn-search.searchMdn',async function () {
-let funcName = "search_mdn"; let pyVar = "python3";
+let search = vscode.commands.registerCommand('mdn-search.search',async function () {
+let funcName = "search"; let pyVar = "python3";
         let py = spawn(pyVar, [pythonPath, funcName]);
 
         py.stdout.on("data", (data) => {
@@ -196,7 +196,7 @@ let funcName = "search_mdn"; let pyVar = "python3";
             console.error(`An Error occurred in the python script: ${data}`);
         });
         });
-context.subscriptions.push(searchMdn);
+context.subscriptions.push(search);
 }
 
 function deactivate() {}

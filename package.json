@@ -12,8 +12,8 @@
   "contributes": {
     "commands": [
       {
-        "command": "mdn-search.searchMdn",
-        "title": "Search Mdn",
+        "command": "mdn-search.search",
+        "title": "Search",
         "category": "MDN Search"
       }
     ],
@@ -29,6 +29,6 @@
     }
   },
   "activationEvents": [
-    "onCommand:mdn-search.searchMdn"
+    "onCommand:mdn-search.search"
   ]
 }

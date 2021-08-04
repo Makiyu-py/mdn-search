@@ -28,7 +28,6 @@ ext = vscode.Extension(
 )
 ext.set_default_category(ext.display_name)
 
-# session = requests.Session()
 base_uri = "https://developer.mozilla.org"
 base_search_uri = base_uri + "/api/v1/search?q={q}&sort=best&locale=en-US"
 
@@ -39,7 +38,7 @@ def on_activate():
 
 
 @ext.command()
-def search_mdn():
+def search():
     editor = vscode.window.ActiveTextEditor()
     if not editor or editor.selection.is_empty:
         options = vscode.ext.InputBoxOptions(title="Search MDN Web Docs")
