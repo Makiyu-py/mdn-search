@@ -59,7 +59,7 @@ def search():
     to_qp = []
 
     # convert results to quick pick items
-    for i in res[:10]:
+    for i in res:
         to_qp.append(
             window.QuickPickItem(
                 label=i["title"], detail=i["summary"], link=i["mdn_url"]
