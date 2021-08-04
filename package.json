@@ -2,6 +2,7 @@
   "name": "mdn-search",
   "displayName": "MDN Search",
   "version": "0.0.1",
+  "license": "MIT",
   "engines": {
     "vscode": "^1.56.0"
   },
