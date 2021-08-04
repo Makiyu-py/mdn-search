@@ -2,6 +2,24 @@
 
 Search the MDN Web Docs in VSCode!
 
+## Prerequisites
+
+You must have at least Python 3.6 or above in order for the extension to work.
+
+## Commands
+
+### `> MDN Search: Search`
+
+Highlight a word (or search a word) and get its MDN Web Doc!
+
+<img src="https://i.imgur.com/mjojLA1.gif" height="450px">
+
+## Configuration
+
+### `Open Top Result`
+
+If enabled, this'll open the top result of the search.
+
 ## To-Do
 
 - [ ] Add locales
