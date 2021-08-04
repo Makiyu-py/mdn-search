@@ -1,0 +1,4 @@
+venv/
+
+# a copy of the vscode pkg in build for testing
+build/vscode/
