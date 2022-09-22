@@ -1,4 +1,20 @@
-venv/
+# Packages
+node_modules
+**/node_modules
 
-# a copy of the vscode pkg in build for testing
-build/vscode/
+# Build artifacts
+dist/
+
+# Log files
+logs
+*.log
+npm-debug.log*
+
+# Runtime data
+pids
+*.pid
+*.seed
+
+# Miscellaneous
+.tmp/
+!.vscode/launch.json
