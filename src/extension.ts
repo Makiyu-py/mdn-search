@@ -1,6 +1,18 @@
 import axios from 'axios';
 import * as vscode from 'vscode';
 
+async function coreSearch(query: String) {
+	const baseUri = 'https://developer.mozilla.org';
+	let page: Object = await axios.get(
+		`${baseUri}/api/v1/search?q=${query}&sort=best&locale=en-US`
+	);
+	let res: Array<Object> = page.documents.map(
+		(docObj: Object) => `${baseUri}${docObj.mdn_url}`
+	);
+
+	return res.sort((a, b) => a.score - b.score).reverse();
+}
+
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
