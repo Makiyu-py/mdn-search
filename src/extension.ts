@@ -4,17 +4,22 @@ import * as intf from './interfaces';
 
 async function coreSearch(query: String) {
 	const baseUri = 'https://developer.mozilla.org';
-	let page: intf.SearchData = await axios.get(
+	const res = await axios.get(
 		`${baseUri}/api/v1/search?q=${query}&sort=best&locale=en-US`
 	);
-	
+
+	let page: intf.SearchData = res.data;
 	page.documents.map((docObj: intf.SearchDocumentData) => {
 		let newUrl = `https://developer.mozilla.org${docObj.mdn_url}`;
 		docObj.mdn_url = newUrl;
 	});
 	page.documents.sort((a, b) => a.score - b.score).reverse();
 
-	return page;
+	return page.documents;
+}
+
+async function convertUrlToCallableUri(url: string) {
+	return await vscode.env.asExternalUri(vscode.Uri.parse(url));
 }
 
 // this method is called when your extension is activated
@@ -28,13 +33,54 @@ export function activate(context: vscode.ExtensionContext) {
 	// Now provide the implementation of the command with registerCommand
 	// The commandId parameter must match the command field in package.json
 	let disposable = vscode.commands.registerCommand(
-		'mdn-search.helloWorld',
-		() => {
-			// The code you place here will be executed every time your command is executed
-			// Display a message box to the user
-			vscode.window.showInformationMessage(
-				'Hello World from mdn-search!'
-			);
+		'mdn-search.search',
+		async () => {
+			let editor = vscode.window.activeTextEditor;
+			const config = vscode.workspace.getConfiguration('mdn-search');
+			let q: string | undefined;
+
+			if (editor === undefined || editor.selection.isEmpty) {
+				q = await vscode.window.showInputBox({
+					title: 'Search MDN Web Docs',
+				});
+			} else {
+				q = editor.document.getText(editor.selection);
+			}
+
+			if (q !== undefined) {
+				const res = await coreSearch(q);
+				if (res.length === 0) {
+					await vscode.window.showErrorMessage(
+						`No matches found for "${q}".`
+					);
+				} else {
+					// if (config.get('openTopResult')) {
+					// 	const callableUri = await convertUrlToCallableUri(
+					// 		res[0].mdn_url
+					// 	);
+					// 	await vscode.env.openExternal(callableUri);
+					// 	return;
+					// }
+					let toQP: Array<vscode.QuickPickItem> = [];
+
+					for (let index in res) {
+						let i = res[index];
+						toQP.push({
+							label: i.title,
+							description: i.summary,
+							detail: i.mdn_url,
+						});
+					}
+					const pick = await vscode.window.showQuickPick(toQP);
+
+					if (pick && pick.detail) {
+						const callableUri = await convertUrlToCallableUri(
+							pick.detail
+						);
+						await vscode.env.openExternal(callableUri);
+					}
+				}
+			}
 		}
 	);
 
