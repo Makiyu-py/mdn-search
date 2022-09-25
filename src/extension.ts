@@ -58,21 +58,19 @@ export function activate(context: vscode.ExtensionContext) {
 						await vscode.env.openExternal(callableUri);
 						return;
 					}
-					let toQP: Array<vscode.QuickPickItem> = [];
-
-					for (let index in res) {
-						let i = res[index];
-						toQP.push({
+					const toQP: Array<vscode.QuickPickItem> = res.map((i) => {
+						return {
 							label: i.title,
-							description: i.summary,
-							detail: i.mdn_url,
-						});
-					}
+							description: i.slug,
+							detail: i.summary,
+						};
+					});
+
 					const pick = await vscode.window.showQuickPick(toQP);
 
-					if (pick && pick.detail) {
+					if (pick && pick.description) {
 						const callableUri = await convertUrlToCallableUri(
-							pick.detail
+							`https://developer.mozilla.org/en-US/docs/${pick.description}`
 						);
 						await vscode.env.openExternal(callableUri);
 					}
