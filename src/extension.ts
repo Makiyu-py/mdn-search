@@ -1,8 +1,20 @@
 import axios from 'axios';
+import * as LRU from 'lru-cache';
 import * as vscode from 'vscode';
 import * as intf from './interfaces';
 
-async function coreSearch(query: String) {
+const cache: LRU<String, intf.SearchDocumentData[]> = new LRU({
+	max: 60,
+	ttl: 18000000, // 5 hours
+});
+
+async function coreSearch(query: String): Promise<intf.SearchDocumentData[]> {
+	query = query.toLowerCase()  // for better querying in cache
+	if (cache.has(query)) {
+		// extra lines of code bc TypeScript is annoying me
+		let i: intf.SearchDocumentData[] | undefined;
+		if ((i = cache.get(query)) !== undefined) return i;
+	}
 	const baseUri = 'https://developer.mozilla.org';
 	const res = await axios.get(
 		`${baseUri}/api/v1/search?q=${query}&sort=best&locale=en-US`
@@ -14,6 +26,8 @@ async function coreSearch(query: String) {
 		docObj.mdn_url = newUrl;
 	});
 	page.documents.sort((a, b) => a.score - b.score).reverse();
+
+	cache.set(query, page.documents);
 
 	return page.documents;
 }
@@ -29,7 +43,7 @@ export function activate(context: vscode.ExtensionContext) {
 	// This line of code will only be executed once when your extension is activated
 	console.log('"mdn-search" is now active!');
 
-	let disposable = vscode.commands.registerCommand(
+	const search = vscode.commands.registerCommand(
 		'mdn-search.search',
 		async () => {
 			let editor = vscode.window.activeTextEditor;
@@ -79,8 +93,10 @@ export function activate(context: vscode.ExtensionContext) {
 		}
 	);
 
-	context.subscriptions.push(disposable);
+	context.subscriptions.push(search);
 }
 
 // this method is called when your extension is deactivated
-export function deactivate() {}
+export function deactivate() {
+	cache.clear();
+}
