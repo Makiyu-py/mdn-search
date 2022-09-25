@@ -29,9 +29,6 @@ export function activate(context: vscode.ExtensionContext) {
 	// This line of code will only be executed once when your extension is activated
 	console.log('"mdn-search" is now active!');
 
-	// The command has been defined in the package.json file
-	// Now provide the implementation of the command with registerCommand
-	// The commandId parameter must match the command field in package.json
 	let disposable = vscode.commands.registerCommand(
 		'mdn-search.search',
 		async () => {
@@ -54,13 +51,13 @@ export function activate(context: vscode.ExtensionContext) {
 						`No matches found for "${q}".`
 					);
 				} else {
-					// if (config.get('openTopResult')) {
-					// 	const callableUri = await convertUrlToCallableUri(
-					// 		res[0].mdn_url
-					// 	);
-					// 	await vscode.env.openExternal(callableUri);
-					// 	return;
-					// }
+					if (config.get('openTopResult')) {
+						const callableUri = await convertUrlToCallableUri(
+							res[0].mdn_url
+						);
+						await vscode.env.openExternal(callableUri);
+						return;
+					}
 					let toQP: Array<vscode.QuickPickItem> = [];
 
 					for (let index in res) {
