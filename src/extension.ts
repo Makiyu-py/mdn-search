@@ -9,7 +9,7 @@ const cache: LRU<String, intf.SearchDocumentData[]> = new LRU({
 });
 
 async function coreSearch(query: String): Promise<intf.SearchDocumentData[]> {
-	query = query.toLowerCase()  // for better querying in cache
+	query = query.toLowerCase(); // for better querying in cache
 	if (cache.has(query)) {
 		// extra lines of code bc TypeScript is annoying me
 		let i: intf.SearchDocumentData[] | undefined;
@@ -93,7 +93,15 @@ export function activate(context: vscode.ExtensionContext) {
 		}
 	);
 
-	context.subscriptions.push(search);
+	const clearCache = vscode.commands.registerCommand(
+		'mdn-search.clearCache',
+		async () => {
+			cache.clear();
+			await vscode.window.showInformationMessage('Cache Cleared');
+		}
+	);
+
+	context.subscriptions.push(search, clearCache);
 }
 
 // this method is called when your extension is deactivated

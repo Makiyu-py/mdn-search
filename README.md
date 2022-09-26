@@ -12,6 +12,10 @@ Highlight a word (or search a word) and get its MDN Web Doc!
 
 <img src="https://i.imgur.com/mjojLA1.gif" height="450px">
 
+### `> MDN Search: Clear Cache`
+
+Clears the cache stored when searching.
+
 ## Configuration
 
 ### `Open Top Result`
