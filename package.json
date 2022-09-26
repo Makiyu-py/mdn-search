@@ -19,7 +19,8 @@
 		"commands": [
 			{
 				"command": "mdn-search.search",
-				"title": "Search the MDN Web Docs"
+				"title": "Search",
+				"category": "MDN Search"
 			},
 			{
 				"command": "mdn-search.clearCache",
