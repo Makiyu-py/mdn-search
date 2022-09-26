@@ -3,6 +3,8 @@
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 [![Repo Stars](https://img.shields.io/github/stars/Makiyu-py/mdn-search?style=social)](https://github.com/Makiyu-py/mdn-search)
 
+(this is the old code before I migrated to TypeScript. I actually got the idea of making a VSCode extension to try out vscode-ext so it kinda got back full-circle lol)
+
 Search the MDN Web Docs in VSCode!
 
 ## Prerequisites
