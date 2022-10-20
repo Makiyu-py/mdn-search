@@ -10,7 +10,7 @@ const cache: LRU<String, intf.SearchDocumentData[]> = new LRU({
 
 async function coreSearch(
 	query: string,
-	locale: string | undefined
+	locale: string
 ): Promise<intf.SearchDocumentData[]> {
 	query = query.toLowerCase(); // for better querying in cache
 	if (cache.has(query)) {
