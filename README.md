@@ -22,6 +22,6 @@ Clears the cache stored when searching.
 
 If enabled, this'll open the top result of the search.
 
-## To-Do
+### `Content Locale`
 
--   [x] Add locales
+Change the content language of the search results.
