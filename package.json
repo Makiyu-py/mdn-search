@@ -35,6 +35,33 @@
 					"description": "If enabled, this'll open the top result of the search.",
 					"type": "boolean",
 					"default": false
+				},
+				"mdn-search.contentLocale": {
+					"description": "The language shown in your search results.",
+					"type": "string",
+					"default": "en-US",
+					"enum": [
+						"en-US",
+						"es",
+						"fr",
+						"ja",
+						"ko",
+						"pt-BR",
+						"ru",
+						"zh-CN",
+						"zh-TW"
+					],
+					"enumItemLabels": [
+						"English",
+						"Spanish",
+						"French",
+						"Japanese",
+						"Korean",
+						"Portugese",
+						"Russian",
+						"Chinese (Simplified)",
+						"Chinese (Traditional)"
+					]
 				}
 			}
 		}

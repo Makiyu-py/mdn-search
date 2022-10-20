@@ -24,5 +24,4 @@ If enabled, this'll open the top result of the search.
 
 ## To-Do
 
--   [ ] Add locales
--   [ ] Add functionality to open link here on vsc via webviews
+-   [x] Add locales

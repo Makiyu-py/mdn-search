@@ -8,7 +8,10 @@ const cache: LRU<String, intf.SearchDocumentData[]> = new LRU({
 	ttl: 18000000, // 5 hours
 });
 
-async function coreSearch(query: String): Promise<intf.SearchDocumentData[]> {
+async function coreSearch(
+	query: string,
+	locale: string | undefined
+): Promise<intf.SearchDocumentData[]> {
 	query = query.toLowerCase(); // for better querying in cache
 	if (cache.has(query)) {
 		// extra lines of code bc TypeScript is annoying me
@@ -17,7 +20,7 @@ async function coreSearch(query: String): Promise<intf.SearchDocumentData[]> {
 	}
 	const baseUri = 'https://developer.mozilla.org';
 	const res = await axios.get(
-		`${baseUri}/api/v1/search?q=${query}&sort=best&locale=en-US`
+		`${baseUri}/api/v1/search?q=${query}&sort=best&locale=${locale}`
 	);
 
 	let page: intf.SearchData = res.data;
@@ -59,7 +62,8 @@ export function activate(context: vscode.ExtensionContext) {
 			}
 
 			if (q !== undefined) {
-				const res = await coreSearch(q);
+				const locale: string = config.get('contentLocale') ?? 'en-US';
+				const res = await coreSearch(q, locale);
 				if (res.length === 0) {
 					await vscode.window.showErrorMessage(
 						`No matches found for "${q}".`
@@ -84,7 +88,7 @@ export function activate(context: vscode.ExtensionContext) {
 
 					if (pick && pick.description) {
 						const callableUri = await convertUrlToCallableUri(
-							`https://developer.mozilla.org/en-US/docs/${pick.description}`
+							`https://developer.mozilla.org/${locale}/docs/${pick.description}`
 						);
 						await vscode.env.openExternal(callableUri);
 					}
